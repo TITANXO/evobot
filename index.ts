@@ -1,15 +1,24 @@
-import { Client, GatewayIntentBits } from "discord.js";
-import { Bot } from "./structs/Bot";
+require('dotenv').config(); // Make sure dotenv is installed and loaded
 
-export const bot = new Bot(
-  new Client({
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({
     intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildVoiceStates,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.GuildMessageReactions,
-      GatewayIntentBits.MessageContent,
-      GatewayIntentBits.DirectMessages
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
     ]
-  })
-);
+});
+
+const token = process.env.DISCORD_TOKEN;
+
+if (!token) {
+    console.error('Error: Bot token is missing.');
+    process.exit(1); // Exit if no token is found
+}
+
+client.login(token)
+    .then(() => console.log('Bot is online!'))
+    .catch((error) => {
+        console.error('Invalid Bot Token:', error.message);
+        process.exit(1); // Exit if login fails
+    });
