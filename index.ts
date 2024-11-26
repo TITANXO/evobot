@@ -9,7 +9,7 @@ const client = new Client({
     ]
 });
 
-const token = process.env.DISCORD_TOKEN;
+const token = process.env.TOKEN;
 
 if (!token) {
     console.error('Error: Bot token is missing.');
